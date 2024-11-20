@@ -1,0 +1,76 @@
+POST http://localhost:8000/api/register/
+Content-Type: application/json
+
+{
+    "username": "user8-admin",
+    "password": "123",
+    "first_name": "first_name",
+    "last_name": "last_name",
+    "email": "12@q.com",
+    "is_staff":"false",
+    "storage_path":"123123123"
+}
+
+###
+
+POST http://localhost:8000/api/token/login/
+Content-Type: application/json
+
+{
+    "username": "123",
+    "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/token/logout/
+Authorization: Token 7397bac036b5bcf359452cd7ee56ebdfc370b0f3
+
+
+###
+
+GET http://localhost:8000/api/files/
+
+###
+POST http://localhost:8000/api/files/
+Authorization: Token 75acb065e72e2a86a4f9a9854c08c8d609392946
+Content-Type: application/json
+
+{
+  "name": "4564",
+  "size": "1",
+  "comment":"red.",
+  "path": "This fie.",
+  "url": "Th."
+}
+
+###
+
+PATCH  http://localhost:8000/api/files/4/
+Authorization: Token 8d3f3d0414fbf8f549b3406d02b2e8f1ddf27407
+Content-Type: application/json
+
+{
+  "comment":"new comment"
+}
+
+###
+
+DELETE http://localhost:8000/api/files/1/
+Authorization: Token 30f68c3958c75b7f2f9d2ec287b1e5b9934588ec
+
+
+###
+
+GET  http://localhost:8000/api/users/
+Authorization: Token 72b46a577ffb08eea785bf87bb31ae3a904604d8
+
+###
+
+DELETE   http://localhost:8000/api/users/7/
+Authorization: Token 72b46a577ffb08eea785bf87bb31ae3a904604d8
+
+
+### 
+POST http://localhost:8000/api/files/
+Content-Type: multipart/form-data
