@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
-from users.serializers import SingUpUserSerializer, ViewUserSerializer
+from users.permissions import IsSelf
+from users.serializers import SingUpUserSerializer, ViewUserSerializer, TokenUserSrializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
@@ -21,5 +22,14 @@ def register(request):
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = ViewUserSerializer
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser | IsSelf]
+
+@api_view(http_method_names=['GET'])
+def get_token_user(request):
+    output_serializer = TokenUserSrializer(data = request.data)
+    output_serializer.is_valid(raise_exception=True)
+
+    return Response(output_serializer.data)
+
+
 

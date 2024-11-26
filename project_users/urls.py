@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from demo.views import FileViewSet
-from users.views import register, UserViewSet
+from users.views import register, UserViewSet, get_token_user
 from rest_framework.routers import DefaultRouter
 from settings.views import get_path, get_response
 
@@ -36,6 +36,7 @@ urlpatterns = [
     path('api/', include(router_users.urls)),
     path('start/', get_path),
     path('res/', get_response),
+    path('api/auth/',get_token_user)
 
 
 ]

@@ -2,12 +2,12 @@ POST http://localhost:8000/api/register/
 Content-Type: application/json
 
 {
-    "username": "user2111",
+    "username": "user14",
     "password": "123",
     "first_name": "first_name",
     "last_name": "last_name",
     "email": "12@q.com",
-    "is_staff":"false",
+    "is_staff":"true",
     "storage_path":"123123123"
 }
 
@@ -17,14 +17,15 @@ POST http://localhost:8000/api/token/login/
 Content-Type: application/json
 
 {
-    "username": "user2111",
+    "username": "123",
     "password": "123"
 }
 
 ###
 
 POST http://localhost:8000/api/token/logout/
-Authorization: Token 7397bac036b5bcf359452cd7ee56ebdfc370b0f3
+Authorization: Token 68c3cd7be5195b02ff8ac210c2826f81a52bf41f
+
 
 
 ###
@@ -46,31 +47,64 @@ Content-Type: application/json
 
 ###
 
-PATCH  http://localhost:8000/api/files/4/
-Authorization: Token 8d3f3d0414fbf8f549b3406d02b2e8f1ddf27407
+PATCH  http://localhost:8000/api/files/44/
+Authorization: Token 89790a9890611366ee048605e5b8110e97818a1c
 Content-Type: application/json
 
 {
-  "comment":"new comment"
+  "comment":"comment from 6"
 }
 
 ###
 
-DELETE http://localhost:8000/api/files/1/
-Authorization: Token 30f68c3958c75b7f2f9d2ec287b1e5b9934588ec
+DELETE http://localhost:8000/api/files/37/
+Authorization: Token 69ef9510931928aa89a1f9d211ee1fa27a299a6c
 
 
 ###
 
-GET  http://localhost:8000/api/users/
-Authorization: Token 72b46a577ffb08eea785bf87bb31ae3a904604d8
+GET  http://localhost:8000/api/users/9/
+Authorization: Token da6814369447a21253b1cebf1b34d19696ea6ccc
 
 ###
 
-DELETE   http://localhost:8000/api/users/7/
-Authorization: Token 72b46a577ffb08eea785bf87bb31ae3a904604d8
+DELETE  http://localhost:8000/api/users/10/
+Authorization: Token f4feb0199ead88d9ff70b11278dae024d3032afe
 
+
+###
+PATCH http://localhost:8000/api/users/6/
+Authorization: Token f4feb0199ead88d9ff70b11278dae024d3032afe
+Content-Type: application/json
+
+{
+  "is_staff":"false"
+}
 
 ### 
-POST http://localhost:8000/api/files/
-Content-Type: multipart/form-data
+PATCH  http://localhost:8000/api/files/44/
+Authorization: Token bbf0548020c3342f3e970b1e7a78cd2b55114b49
+Content-Type: application/json
+
+{
+  "comment": "new_comment"
+}
+
+
+###
+PATCH    http://localhost:8000/api/users/2/
+Authorization: Token 1dcbb3e5ef45b373e2c5696f518ed571482fac54
+Content-Type: application/json
+
+{
+  "first_name": "new_first_name"
+}
+
+###
+GET  http://localhost:8000/api/auth/
+Content-Type: application/json
+
+{
+  "key":"da6814369447a21253b1cebf1b34d19696ea6ccc"
+
+}

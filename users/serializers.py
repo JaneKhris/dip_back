@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from users.models import User
 from django.contrib.auth.hashers import make_password
+from rest_framework.authtoken.models import Token
 
 class SingUpUserSerializer(serializers.ModelSerializer):
 
@@ -20,3 +21,8 @@ class ViewUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id','username', 'first_name','last_name','email','is_staff','storage_path']
 
+class TokenUserSrializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Token
+        fields = ['user_id','key']
