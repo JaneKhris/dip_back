@@ -2,35 +2,51 @@ POST http://localhost:8000/api/register/
 Content-Type: application/json
 
 {
-    "username": "user14",
+    "username": "user2",
     "password": "123",
-    "first_name": "first_name",
-    "last_name": "last_name",
-    "email": "12@q.com",
-    "is_staff":"true",
-    "storage_path":"123123123"
+    "first_name": "user2",
+    "last_name": "user2",
+    "is_staff": "true",
+    "email": "2@q.com",
+    "storage_path":"77887788778789879879"
 }
 
 ###
 
-POST http://localhost:8000/api/token/login/
+# POST http://localhost:8000/api/token/login/
+# Content-Type: application/json
+
+# {
+#     "username": "456",
+#     "password": "123"
+# }
+
+# ###
+
+# POST http://localhost:8000/api/token/logout/
+# Authorization: Token 68c3cd7be5195b02ff8ac210c2826f81a52bf41f
+
+###
+
+POST http://localhost:8000/api/auth/login/
 Content-Type: application/json
 
 {
-    "username": "123",
+    "username": "user19",
     "password": "123"
 }
 
 ###
+POST http://localhost:8000/api/auth/logout/
+Authorization: Token bb3acd63a869602c5f2623ff6b82dbf00c66e302
 
-POST http://localhost:8000/api/token/logout/
-Authorization: Token 68c3cd7be5195b02ff8ac210c2826f81a52bf41f
 
 
 
 ###
 
-GET http://localhost:8000/api/files/
+GET http://localhost:8000/api/files/53
+Authorization: Token a348abcfcc1449282b19b6722f8f060aa60e33c3
 
 ###
 POST http://localhost:8000/api/files/
@@ -47,12 +63,12 @@ Content-Type: application/json
 
 ###
 
-PATCH  http://localhost:8000/api/files/44/
-Authorization: Token 89790a9890611366ee048605e5b8110e97818a1c
+PATCH  http://localhost:8000/api/files/6/
+Authorization: Token da213d9225bf718cbb266cca26dd8c9a28f7b1c4
 Content-Type: application/json
 
 {
-  "comment":"comment from 6"
+  "comment":"comment from 9"
 }
 
 ###
@@ -63,13 +79,14 @@ Authorization: Token 69ef9510931928aa89a1f9d211ee1fa27a299a6c
 
 ###
 
-GET  http://localhost:8000/api/users/9/
-Authorization: Token da6814369447a21253b1cebf1b34d19696ea6ccc
+GET  http://localhost:8000/api/users/
+Authorization: Token da213d9225bf718cbb266cca26dd8c9a28f7b1c4
+
 
 ###
 
-DELETE  http://localhost:8000/api/users/10/
-Authorization: Token f4feb0199ead88d9ff70b11278dae024d3032afe
+DELETE  http://localhost:8000/api/users/1/
+Authorization: Token 259c1c65291d50a6f06cf8337b9e59fe630ae31c
 
 
 ###
@@ -108,3 +125,7 @@ Content-Type: application/json
   "key":"da6814369447a21253b1cebf1b34d19696ea6ccc"
 
 }
+
+###
+
+GET http://localhost:8000/api/download/51

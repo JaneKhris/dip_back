@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from demo.views import FileViewSet
-from users.views import register, UserViewSet, get_token_user
+from users.views import register, UserViewSet, CustomAuthToken, logout
 from rest_framework.routers import DefaultRouter
 from settings.views import get_path, get_response
+from demo.views import preview, download, download_url
 
 router_files = DefaultRouter()
 router_files.register('files', FileViewSet)
@@ -31,12 +32,14 @@ router_users.register('users', UserViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/register/', register),
-    path('api/', include('djoser.urls.authtoken')),
+    # path('api/', include('djoser.urls.authtoken')),
     path('api/', include(router_files.urls)),
     path('api/', include(router_users.urls)),
     path('start/', get_path),
     path('res/', get_response),
-    path('api/auth/',get_token_user)
-
-
+    path('api/auth/login/', CustomAuthToken.as_view()),
+    path('api/auth/logout/', logout),
+    path('api/preview/', preview),
+    path('api/download/<file_id>/', download),
+    path('api/storage/<str>/',download_url)
 ]
