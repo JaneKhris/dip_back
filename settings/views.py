@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 import os.path
 import os
 from settings.serializers import DataSerializer,TextSerializer
-from demo.serializers import FileSerializer
+from files.serializers import FileSerializer
 
 # Create your views here.
 def get_path(request):

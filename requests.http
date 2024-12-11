@@ -32,13 +32,13 @@ POST http://localhost:8000/api/auth/login/
 Content-Type: application/json
 
 {
-    "username": "user19",
-    "password": "123"
+    "username": "user1",
+    "password": "123hg"
 }
 
 ###
 POST http://localhost:8000/api/auth/logout/
-Authorization: Token bb3acd63a869602c5f2623ff6b82dbf00c66e302
+Authorization: Token 18fc2e217c6124779fe984fac03a2e904f70d9c4
 
 
 
@@ -129,3 +129,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8000/api/download/51
+
+###
+GET http://localhost:8000/api/files/?owner=6&&ordering=name
+Authorization: Token 4754cc09dfc9a5b7013e997c40e4d805cd5efd1c

@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from users.permissions import IsSelf
@@ -10,16 +11,20 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.filters import OrderingFilter
-from demo.utils import get_user_path
+from files.utils import get_user_path
+
+import shutil
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-
-# Create your views here.
 @api_view(http_method_names=['POST'])
 def register(request):
     input_serializer = SingUpUserSerializer(data = request.data)
     input_serializer.is_valid(raise_exception=True)
     input_serializer.save(storage_path = get_user_path(request.data['username']))
+    logger.info(f"пользователь {request.data['username']} зарегистрирован")
     return Response(input_serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -30,24 +35,30 @@ class UserViewSet(ModelViewSet):
     filter_backends = [OrderingFilter]
     ordering_fields = ['username','id']
 
-
-
-
-    # def perform_create(self,serializer):
-    #     serializer.save(
-    #         storage_path = get_user_path(self.request.data['username'])
-    #     )
-    #     pass
+    def perform_destroy(self, instance):
+        try:
+            shutil.rmtree(instance.storage_path)
+        except FileNotFoundError:
+            logger.error('папка пользователя не найдена')
+        logger.info(f'пользователь {instance.name} удален')
+        return super().perform_destroy(instance)
 
 
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
+        if (not(User.objects.filter(username=request.data['username']).exists())):
+            return Response( {
+                'error': 'no user'
+            }
+                ,status=status.HTTP_401_UNAUTHORIZED,)
+
         serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
+                                        context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+        logger.info(f'пользователь {request.data["username"]} вошел в систему')
         return Response({
             'token': token.key,
             'user_id': user.pk,
@@ -62,4 +73,6 @@ def logout(request):
     print(key)
     token = Token.objects.filter(key = key)
     token.delete()
+    logger.info(f'пользователь вышел из системы')
+
     return Response('success')

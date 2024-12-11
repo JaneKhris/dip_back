@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
-    'djoser',
+    # 'djoser',
     'users',
-    'demo',
+    'files',
     "corsheaders",
 ]
 
@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'project_users.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'newdb',
+        'NAME': 'files_app_db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',    
         }
@@ -140,7 +140,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication'
     ],
     'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend'
+        'django_filters.rest_framework.DjangoFilterBackend',
     ],
 }
 
@@ -149,3 +149,26 @@ CORS_ALLOW_ALL_ORIGINS =  True
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_HEADERS = ('Access-Control-Allow-Origin')
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+}

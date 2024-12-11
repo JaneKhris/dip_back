@@ -16,11 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from demo.views import FileViewSet
+from files.views import FileViewSet
 from users.views import register, UserViewSet, CustomAuthToken, logout
 from rest_framework.routers import DefaultRouter
 from settings.views import get_path, get_response
-from demo.views import preview, download, download_url
+from files.views import preview, download, download_url
 
 router_files = DefaultRouter()
 router_files.register('files', FileViewSet)
