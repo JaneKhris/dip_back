@@ -1,11 +1,11 @@
 import os
 
-storage_dirname = 'storage_diplom'
+storage_dirname = ''
 
 storage_path = os.getcwd() + '/' + storage_dirname
 
-db_name = 'files_app_db'
+db_name = ''
 
-db_user = 'postgres'
+db_user = ''
 
-db_password = 'postgres'
+db_password = ''
