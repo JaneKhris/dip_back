@@ -35,7 +35,6 @@ class FileViewSet(ModelViewSet):
             splitted = filename.split('.')
             filename = f'{splitted[0]}(1).{splitted[1]}'
         path = get_user_path(self.request.user)+filename
-        print(type(self.request.data['file'].size))
  
         serializer.save(
             owner = self.request.user,
@@ -53,7 +52,6 @@ class FileViewSet(ModelViewSet):
 
 
     def perform_destroy(self, instance):
-        print(instance.path)
         try:
             os.remove(instance.path)
         except FileNotFoundError:
@@ -63,8 +61,6 @@ class FileViewSet(ModelViewSet):
     
 
     def update(self, request, *args, **kwargs):
-        print(request.data)
-        print(self.get_object())
         change_name = (request.data['name'] != self.get_object().name)
         if change_name:
             old_path = self.get_object().path

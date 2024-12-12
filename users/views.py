@@ -68,9 +68,7 @@ class CustomAuthToken(ObtainAuthToken):
 
 @api_view(http_method_names=['POST'])
 def logout(request):
-    print(request.headers)
     key = request.headers['Authorization'].split()[1]
-    print(key)
     token = Token.objects.filter(key = key)
     token.delete()
     logger.info(f'пользователь вышел из системы')

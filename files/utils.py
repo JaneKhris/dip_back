@@ -8,11 +8,8 @@ def get_user_path(username):
     return user_path
 
 
-    
-
 import random
 import string
-
 
 def generate_random_string(length):
     letters = string.ascii_lowercase
