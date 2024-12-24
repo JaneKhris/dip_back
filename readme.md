@@ -3,6 +3,8 @@
 - создать базу данных postrges
 - в корне проекта создать папку
 - в /settings/settings.py внести имя папки, имя базы данных, имя пользователя и пароль postgres
+- создать рабочее окружение `python -m vnv venv`
+- активировать рабочее окружение `.\venv\Scripts\activate`
 - установить пакеты `pip install -r requirements.txt`
 - применить миграции `python manage.py migrate`
 - запустить сервер `python manage.py runserver`
