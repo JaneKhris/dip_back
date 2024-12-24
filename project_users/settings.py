@@ -47,9 +47,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -137,7 +137,7 @@ AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
+        'rest_framework.authentication.SessionAuthentication'
     ],
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -146,9 +146,20 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_ALL_ORIGINS =  True
 
-CORS_ORIGIN_ALLOW_ALL = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SAMESITE = 'Lax'
 
-CORS_ALLOW_HEADERS = ('Access-Control-Allow-Origin')
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = True
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+
+# CSRF_COOKIE_NAME = 'csrftoken'
+# CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
+
+
+CORS_ALLOW_CREDENTIALS = True
+
 
 LOGGING = {
     "version": 1,

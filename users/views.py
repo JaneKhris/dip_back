@@ -1,5 +1,7 @@
 import os
+import json
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.decorators import api_view
 from users.permissions import IsSelf
 from users.serializers import SingUpUserSerializer, ViewUserSerializer, TokenUserSrializer
@@ -12,6 +14,10 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.filters import OrderingFilter
 from files.utils import get_user_path
+from django.contrib.sessions.models import Session
+from django.contrib.auth import SESSION_KEY
+
+
 
 import shutil
 import logging
@@ -40,37 +46,38 @@ class UserViewSet(ModelViewSet):
             shutil.rmtree(instance.storage_path)
         except FileNotFoundError:
             logger.error('папка пользователя не найдена')
-        logger.info(f'пользователь {instance.name} удален')
+        logger.info(f'пользователь {instance.username} удален')
         return super().perform_destroy(instance)
 
 
+@api_view(http_method_names=['POST'])
+def session_login(request):
+    username = request.data['username']
+    password = request.data['password']
 
-class CustomAuthToken(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        if (not(User.objects.filter(username=request.data['username']).exists())):
-            return Response( {
-                'error': 'no user'
-            }
-                ,status=status.HTTP_401_UNAUTHORIZED,)
+    # Валидация
+    if username is None or password is None:
+        return Response({'detail': 'Пожалуйста предоставьте логин и пароль'}, status=400)
 
-        serializer = self.serializer_class(data=request.data,
-                                        context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        logger.info(f'пользователь {request.data["username"]} вошел в систему')
-        return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'user_name': user.first_name,
-            'is_staff': user.is_staff
+    # Аутентификация пользоваля
+    user = authenticate(username=username, password=password)
+    
+    if user is None:
+        return Response({'detail': 'Неверные данные'}, status=400)
+
+    # Создаётся сессия. session_id отправляется в куки
+    login(request, user)
+    print(user.id)
+    res = Response({
+        'detail': 'Успешная авторизация',
+        'user_id': user.id,
+        'user_name': user.username,
+        'is_staff': user.is_staff,
         })
 
-@api_view(http_method_names=['POST'])
-def logout(request):
-    key = request.headers['Authorization'].split()[1]
-    token = Token.objects.filter(key = key)
-    token.delete()
-    logger.info(f'пользователь вышел из системы')
+    return res
 
-    return Response('success')
+@api_view(http_method_names=['POST','GET'])
+def session_logout(request):
+    logout(request)
+    return Response('logout')

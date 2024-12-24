@@ -32,8 +32,8 @@ POST http://localhost:8000/api/auth/login/
 Content-Type: application/json
 
 {
-    "username": "user1",
-    "password": "123hg"
+    "username": "user10",
+    "password": "Home752/"
 }
 
 ###
@@ -133,3 +133,27 @@ GET http://localhost:8000/api/download/51
 ###
 GET http://localhost:8000/api/files/?owner=6&&ordering=name
 Authorization: Token 4754cc09dfc9a5b7013e997c40e4d805cd5efd1c
+
+
+
+###
+
+POST http://localhost:8000/api/sauth/login/
+Content-Type: application/json
+
+{
+    "username": "admin1",
+    "password": "123"
+}
+
+###
+
+POST http://localhost:8000/api/drf-auth/logout/
+Authorization: Basic l2915q60vveky9xznd8kzkrz1p3isnlc
+
+
+###
+
+GET  http://localhost:8000/api/files/
+Authorization: Basic x6qxe9wh9prqbshalt95ha8mn4u0cube
+X-CSRFToken: DOqAa587yszzQDUBb0FZdjgJ0yVbErfQ

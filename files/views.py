@@ -19,17 +19,17 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Create your views here.
 class FileViewSet(ModelViewSet):
     queryset = File.objects.all()
     serializer_class = FileSerializer
-    permission_classes = [IsAuthenticated , IsOwner | IsAdminUser]
+    permission_classes = [IsAuthenticated, IsOwner | IsAdminUser]
     filterset_fields = ['owner',]
     filter_backends = [DjangoFilterBackend,OrderingFilter]
     ordering_fields = ['name']
 
     def perform_create(self, serializer):
         filename = self.request.data['file'].name
+
         logger.info(f'USER:{self.request.user}')
         if File.objects.filter(owner = self.request.user, name = filename) :
             splitted = filename.split('.')
