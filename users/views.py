@@ -58,6 +58,9 @@ def session_login(request):
     # Валидация
     if username is None or password is None:
         return Response({'detail': 'Пожалуйста предоставьте логин и пароль'}, status=400)
+    
+    if User.objects.filter(username = username).exists() == False:
+        return Response({'detail': 'Пользователя  с таким именем не существует'}, status=401)
 
     # Аутентификация пользоваля
     user = authenticate(username=username, password=password)

@@ -7,7 +7,7 @@ from files.models import File
 from files.serializers import FileSerializer
 
 from users.models import User
-from files.utils import get_user_path, generate_random_string
+from files.utils import get_user_path, generate_random_string, filename_50, rename
 from files.permissions import IsOwnerOrReadOnly, IsOwner
 from rest_framework.response import Response
 from rest_framework.filters import OrderingFilter
@@ -28,12 +28,13 @@ class FileViewSet(ModelViewSet):
     ordering_fields = ['name']
 
     def perform_create(self, serializer):
-        filename = self.request.data['file'].name
+        filename = filename_50(self.request.data['file'].name)
 
         logger.info(f'USER:{self.request.user}')
-        if File.objects.filter(owner = self.request.user, name = filename) :
-            splitted = filename.split('.')
-            filename = f'{splitted[0]}(1).{splitted[1]}'
+
+        while File.objects.filter(owner = self.request.user, name = filename):
+            filename = rename(filename)
+
         path = get_user_path(self.request.user)+filename
  
         serializer.save(

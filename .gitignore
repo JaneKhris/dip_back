@@ -20,3 +20,5 @@ settings_local.py
 
 storage/
 storage_diplom/
+
+func.py
